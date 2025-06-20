@@ -1,17 +1,18 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import TextWidget from '@/components/text-widget'
 
 // Mock the useTextWidget hook
-jest.mock('@/hooks/useTextWidget', () => ({
-  useTextWidget: jest.fn(() => ({
+vi.mock('@/hooks/useTextWidget', () => ({
+  useTextWidget: vi.fn(() => ({
     text: 'Mocked text',
-    setText: jest.fn(),
+    setText: vi.fn(),
     isSaving: false,
   })),
 }))
 
 // Mock child components
-jest.mock('@/components/widget-header', () => ({
+vi.mock('@/components/widget-header', () => ({
   WidgetHeader: ({ id, isSaving, onRemove }: any) => (
     <div data-testid="widget-header">
       Widget Header {id} {isSaving ? 'Saving' : 'Not Saving'}
@@ -20,7 +21,7 @@ jest.mock('@/components/widget-header', () => ({
   ),
 }))
 
-jest.mock('@/components/widget-textarea', () => ({
+vi.mock('@/components/widget-textarea', () => ({
   WidgetTextArea: ({ text, onChange, maxLength }: any) => (
     <textarea 
       data-testid="widget-textarea" 
@@ -31,18 +32,18 @@ jest.mock('@/components/widget-textarea', () => ({
   ),
 }))
 
-jest.mock('@/components/character-count', () => ({
+vi.mock('@/components/character-count', () => ({
   CharacterCount: ({ current, max }: any) => (
     <div data-testid="character-count">{current}/{max}</div>
   ),
 }))
 
 describe('TextWidget', () => {
-  const mockOnTextChange = jest.fn()
-  const mockOnRemove = jest.fn()
+  const mockOnTextChange = vi.fn()
+  const mockOnRemove = vi.fn()
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('should render all child components', () => {

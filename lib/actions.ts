@@ -15,6 +15,7 @@ export const getWidgetsAction = createServerAction()
     await dbConnect()
     const widgets = await Widget.find()
     console.log(widgets)
+    revalidatePath('/')
     return widgets.map(widget => ({
       id: (widget._id as Types.ObjectId).toString(),
       type: widget.type,
@@ -23,7 +24,6 @@ export const getWidgetsAction = createServerAction()
       updatedAt: widget.updatedAt
     }))
   })
-
 
 export const createWidgetAction = createServerAction()
   .input(z.object({

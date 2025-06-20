@@ -1,25 +1,26 @@
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { renderHook, act } from '@testing-library/react'
 import { useTextWidget } from '@/hooks/useTextWidget'
 
-jest.mock('use-debounce', () => ({
+vi.mock('use-debounce', () => ({
   useDebouncedCallback: (callback: Function, delay: number) => {
-    return jest.fn((...args) => {
+    return vi.fn((...args) => {
       callback(...args)
     })
   },
 }))
 
 describe('useTextWidget', () => {
-  const mockOnTextChange = jest.fn()
+  const mockOnTextChange = vi.fn()
 
   beforeEach(() => {
-    jest.clearAllMocks()
-    jest.clearAllTimers()
-    jest.useFakeTimers()
+    vi.clearAllMocks()
+    vi.clearAllTimers()
+    vi.useFakeTimers()
   })
 
   afterEach(() => {
-    jest.useRealTimers()
+    vi.useRealTimers()
   })
 
   it('should initialize with initial text', () => {

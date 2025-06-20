@@ -1,11 +1,12 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { WidgetHeader } from '@/components/widget-header'
 
 describe('WidgetHeader', () => {
-  const mockOnRemove = jest.fn()
+  const mockOnRemove = vi.fn()
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    vi.clearAllMocks()
   })
 
   it('should render widget label with id', () => {

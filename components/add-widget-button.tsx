@@ -3,13 +3,17 @@
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
 import { createWidgetAction } from "@/lib/actions"
-import { useServerActionMutation } from "@/hooks/serverActionHook"
+import { useServerActionMutation, QueryKeyFactory } from "@/hooks/serverActionHook"
 import { useRouter } from "next/navigation"
+import { useQueryClient } from "@tanstack/react-query"
 
 export function AddWidgetButton() {
   const router = useRouter()
+  const queryClient = useQueryClient()
   const createMutation = useServerActionMutation(createWidgetAction, {
     onSuccess: () => {
+      // Invalidate and refetch widgets
+      queryClient.invalidateQueries({ queryKey: QueryKeyFactory.getWidgets() })
       router.refresh()
     }
   })

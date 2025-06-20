@@ -22,10 +22,10 @@ shadcn ui to be explained
 - **Zod** - Schema validation
 
 ### Testing Stack
-- **Jest** - Testing framework
+- **Jest** - Unit testing framework
+- **Vitest** - Integration testing framework (better ES modules support)
 - **React Testing Library** - Component testing
 - **@testing-library/jest-dom** - Extended Jest matchers
-- **ts-jest** - TypeScript support for Jest
 
 ## 📁 Project Structure
 
@@ -62,7 +62,7 @@ shadcn ui to be explained
     │   ├── hooks/          # Hook tests
     │   └── lib/            # Utility tests
     └── integration/         # Integration tests
-        └── server-actions-docker.test.ts
+        └── server-actions.test.ts
 ```
 
 ## 🚀 Getting Started
