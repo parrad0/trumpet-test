@@ -1,36 +1,202 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Widgets App
 
-## Getting Started
+A modern web application for managing widgets with MongoDB backend, React Query for data fetching, and comprehensive testing suite.
 
-First, run the development server:
+## 🏗️ Architecture
+
+### Frontend Stack
+- **Next.js 15** - React framework with App Router
+- **React 19** - Latest React with concurrent features
+- **TypeScript** - Type safety and developer experience
+- **Tailwind CSS** - Utility-first CSS framework
+- **React Query (@tanstack/react-query)** - Server state management
+- **Radix UI** - Accessible UI components
+- **Lucide React** - Icon library
+shadcn ui to be explained
+
+### Backend Stack
+- **Next.js SSR** - Server-side API endpoints
+- **MongoDB** - NoSQL database
+- **Mongoose** - MongoDB object modeling
+- **ZSA (Zod Server Actions)** - Type-safe server actions
+- **Zod** - Schema validation
+
+### Testing Stack
+- **Jest** - Testing framework
+- **React Testing Library** - Component testing
+- **@testing-library/jest-dom** - Extended Jest matchers
+- **ts-jest** - TypeScript support for Jest
+
+## 📁 Project Structure
+
+```
+├── app/
+│   ├── api/widgets/           # API routes (REST endpoints)
+│   ├── providers.tsx          # React Query provider setup
+│   ├── page.tsx              # Main page with Suspense
+│   ├── loading.tsx           # Loading skeleton
+│   ├── error.tsx             # Error boundary
+│   └── layout.tsx            # Root layout
+├── components/               # React components
+│   ├── ui/                   # Reusable UI components
+│   ├── text-widget.tsx       # Main widget component
+│   ├── widget-header.tsx     # Widget header with actions
+│   ├── widget-textarea.tsx   # Text input component
+│   ├── character-count.tsx   # Character counter
+│   ├── widget-renderer.tsx   # Widget type renderer
+│   └── widgets-list.tsx      # Widgets container
+├── hooks/                    # Custom React hooks
+│   ├── serverActionHook.ts         # Widgets CRUD operations
+│   ├── useTextWidget.ts    # React Query hooks
+├── lib/                      # Utilities and configurations
+│   ├── mongodb.ts           # Database connection
+│   ├── actions.ts           # Server side actions for widget
+│   └── utils.ts             # Utility functions
+├── models/                   # MongoDB models
+│   └── Widget.ts            # Widget schema and model
+├── types/                    # TypeScript type definitions
+│   └── widget.ts            # Widget-related types
+└── tests/                   # Test suites
+    ├── unit/                # Unit tests
+    │   ├── components/      # Component tests
+    │   ├── hooks/          # Hook tests
+    │   └── lib/            # Utility tests
+    └── integration/         # Integration tests
+        └── server-actions-docker.test.ts
+```
+
+## 🚀 Getting Started
+
+### Prerequisites
+- **Node.js 18+**
+- **Docker and Docker Compose**
+- **npm, yarn, or pnpm** (pnpm recommended for better dependency management)
+
+### 1. Clone and Install
+
+```bash
+git clone <repository-url>
+cd trumpet-test
+
+# Using npm (with automatic peer dependency handling)
+npm install
+
+# Or using pnpm (recommended, handles peer deps better)
+pnpm install
+
+# Or if you have peer dependency issues
+npm run install:clean
+```
+
+> **Note**: The project includes `.npmrc` configuration to automatically install peer dependencies and avoid common dependency conflicts.
+
+### 2. Start MongoDB with Docker
+
+```bash
+docker-compose up -d
+```
+
+This starts MongoDB with:
+- **Port**: 27017
+- **Database**: `widgets_db`
+- **User**: `widgets_user`
+- **Password**: `widgets_password`
+
+### 3. Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧪 Testing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Test Structure
+```
+tests/
+├── unit/                    # Unit tests (jsdom environment)
+│   ├── components/         # Component tests
+│   ├── hooks/             # Hook tests
+│   └── lib/               # Utility tests
+└── integration/            # Integration tests (node environment)
+    └── server-actions-docker.test.ts  # MongoDB integration tests
+```
 
-## Learn More
+### Available Test Commands
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Run all unit tests
+npm test
+# or
+npm run test:unit
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Run unit tests in watch mode
+npm run test:watch
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Run unit tests with coverage
+npm run test:coverage
 
-## Deploy on Vercel
+# Run integration tests
+npm run test:integration
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Run Docker MongoDB integration tests
+npm run test:docker
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Run all tests (unit + integration)
+npm run test:all
+```
+
+### Test Requirements
+
+**For Unit Tests:**
+- No external dependencies required
+- Uses jsdom environment for React components
+
+**For Integration Tests:**
+- Requires Docker MongoDB to be running
+- Tests real database operations
+- Uses factory pattern for test data generation
+
+
+## 📝 Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint |
+| `npm test` | Run unit tests |
+| `npm run test:unit` | Run unit tests |
+| `npm run test:watch` | Run tests in watch mode |
+| `npm run test:coverage` | Run tests with coverage |
+| `npm run test:integration` | Run integration tests |
+| `npm run test:docker` | Run Docker MongoDB tests |
+| `npm run test:all` | Run all tests |
+
+## ✨ Features
+
+- ✅ **CRUD Operations** - Create, read, update, delete widgets
+- ✅ **Real-time Updates** - 
+- ✅ **Type Safety** - Full TypeScript coverage
+- ✅ **Database Persistence** - MongoDB with Mongoose
+- ✅ **Modern UI** - Tailwind CSS with Radix UI components
+- ✅ **Server Actions** - Type-safe server operations with ZSA
+- ✅ **Comprehensive Testing** - Unit and integration tests
+- ✅ **Error Handling** - Proper error boundaries and validation
+- ✅ **Performance** - React 19 concurrent features
+- ✅ **Accessibility** - Radix UI accessible components
+
+## 🧩 Widget System
+
+The application uses an extensible widget system:
+
+```typescript
+// Widget types are defined in types/widget.ts
+export enum WidgetType {
+  TEXT = 'text',
+  // Future types can be added here
+  // IMAGE = 'image',
+  // CHART = 'chart',
+}
