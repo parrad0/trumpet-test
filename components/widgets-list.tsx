@@ -1,28 +1,10 @@
-"use client"
 
 import { AddWidgetButton } from "@/components/add-widget-button"
 import { WidgetRenderer } from "@/components/widget-renderer"
 import { getWidgetsAction } from "@/lib/actions"
-import { useServerActionQuery } from "@/hooks/serverActionHook"
 
-export function WidgetsList() {
-  const { data: widgets, error, isLoading } = useServerActionQuery(
-    getWidgetsAction,
-    {},
-    {}
-  )
-
-  if (error) {
-    console.error(error)
-  }
-
-  if (isLoading) {
-    return (
-      <div className="text-center py-8">
-        <div className="text-gray-500">Loading widgets...</div>
-      </div>
-    )
-  }
+export async function WidgetsList() {
+  const [widgets] = await getWidgetsAction()
 
   return (
     <>

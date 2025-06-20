@@ -14,8 +14,6 @@ export const getWidgetsAction = createServerAction()
   .handler(async () => {
     await dbConnect()
     const widgets = await Widget.find()
-    console.log(widgets)
-    revalidatePath('/')
     return widgets.map(widget => ({
       id: (widget._id as Types.ObjectId).toString(),
       type: widget.type,
